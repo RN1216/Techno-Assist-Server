@@ -18,6 +18,7 @@ async function run(){
 
         const servicesCollection = client.db('techno-assist').collection('services');
         const catagoriesCollection = client.db('techno-assist').collection('catagories');
+        const bookingsCollection = client.db('techno-assist').collection('bookings');
 
         app.get('/services', async(req,res)=>{
             const query = {};
@@ -26,25 +27,26 @@ async function run(){
             res.send(services);
         });
 
-   
-
-        // app.get('/services/:id',async(req,res)=>{
-        //     const id =req.params.id;
-
-        //     const query = {};
-        //     const services = await servicesCollection.findOne(query);
-        //     res.send(services);
-        // });
-
         
         app.get('/catagories/',async(req,res)=>{
-            
-
             const query = {};
             const catagories = await catagoriesCollection.find( query).toArray();
             res.send(catagories);
         });
 
+        app.get('/bookings',async(req,res) =>{
+            const email = req.query.email;
+            console.log(email);
+            const query ={email: email};
+            const bookings = await bookingsCollection.find(query).toArray();
+            res.send(bookings);
+        });
+        app.post('/bookings',async(req,res)=>{
+            const booking = req.body
+            console.log(booking);
+            const result = await bookingsCollection.insertOne(booking);
+            res.send(result);
+        });
 
     }
     finally{
