@@ -19,6 +19,7 @@ async function run(){
         const servicesCollection = client.db('techno-assist').collection('services');
         const catagoriesCollection = client.db('techno-assist').collection('catagories');
         const bookingsCollection = client.db('techno-assist').collection('bookings');
+        const usersCollection = client.db('techno-assist').collection('users');
 
         app.get('/services', async(req,res)=>{
             const query = {};
@@ -36,17 +37,23 @@ async function run(){
 
         app.get('/bookings',async(req,res) =>{
             const email = req.query.email;
-            console.log(email);
+            // console.log(email);
             const query ={email: email};
             const bookings = await bookingsCollection.find(query).toArray();
             res.send(bookings);
         });
         app.post('/bookings',async(req,res)=>{
             const booking = req.body
-            console.log(booking);
+            // console.log(booking);
             const result = await bookingsCollection.insertOne(booking);
             res.send(result);
         });
+
+        app.post('/users', async(req,res)=>{
+            const user =req.body;
+            const result = await usersCollection.insertOne(user);
+            res.send(result);
+        })
 
     }
     finally{
