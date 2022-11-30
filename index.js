@@ -48,7 +48,7 @@ async function run(){
         });
 
         
-        app.get('/catagories/',async(req,res)=>{
+        app.get('/catagories',async(req,res)=>{
             const query = {};
             const catagories = await catagoriesCollection.find( query).toArray();
             res.send(catagories);
